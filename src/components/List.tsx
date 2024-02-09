@@ -1,7 +1,8 @@
 'use client'
-import {  WordContext } from '@/app/contexts/WordContext';
 import clsx from 'clsx';
 import { useContext } from 'react';
+import { api } from '../app/libs/api';
+import { useWordContext } from '../contexts/WordContext';
 
 
 
@@ -9,7 +10,11 @@ interface Props {
   fixed?: boolean;
 }
 export function List({ fixed = false }: Props) {
-  const { words } = useContext(WordContext)
+
+  const { words, setWords } = useWordContext()
+
+  // if(words.length === 0)return <h1>Carregando</h1>
+
   return (
 
     <ul
@@ -29,9 +34,11 @@ export function List({ fixed = false }: Props) {
                 'hover:bg-gray-900': !word.fixed,
               })}
               onClick={async () => {
-                // await api.patch('words/'.concat(word.id), {
-                //   fixed: !word.fixed,
-                // });
+
+                api.patch('/words/'.concat(word.id), {
+                  fixed: !word.fixed,
+                });
+
 
                 const updateWords = words.map((row) => {
                   if (row.id === word.id) {
@@ -40,7 +47,8 @@ export function List({ fixed = false }: Props) {
                   return row;
                 });
 
-                // setWords(updateWords);
+                setWords(updateWords);          
+
               }}
             >
               <strong className="pr-2">{word.name.toUpperCase()}</strong>

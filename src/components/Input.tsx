@@ -1,9 +1,9 @@
 'use client'
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
-import { WordContext } from "../contexts/WordContext";
-import { WordInterface } from "./Main";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { WordInterface, useWordContext } from '@/contexts/WordContext'
+
 
 const searchText = (text: string) => {
   return text
@@ -13,20 +13,24 @@ const searchText = (text: string) => {
 };
 
 interface Props{
-  data: WordInterface[]
+  words: WordInterface[]
 }
 
-export function Input({data}:Props) {
+export function Input({words:data}:Props) {
 
-  const { setWords } = useContext(WordContext)
   const [search, setSearch] = useState('')
-  useEffect(() => {
-    const list = data.filter( word => {
-      return searchText(word.name).includes(search.trim())
-    })
+  const { setWords, words } = useWordContext()
 
-    setWords(list)
-  }, [search])
+  useEffect(() => {
+    const wordsList = data.filter((word) => {
+      return searchText(word.name).includes(search.trim());
+    });
+
+    setWords(wordsList)
+
+  },[search])
+
+  if(words.length === 0)return<></>
 
   return (
     <div className="flex items-center relative justify-end">

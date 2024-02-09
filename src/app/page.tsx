@@ -1,9 +1,7 @@
-import { Input } from "@/app/components/Input";
-import { List } from "@/app/components/List";
-import { Main } from "@/app/components/Main";
-// import { Main } from "@/app/components/Main";
-import { WordContext } from "@/app/contexts/WordContext";
-interface WordInterface {
+import { Input } from "../components/Input";
+import { List } from "../components/List";
+
+export interface WordInterface {
   id: string;
   name: string;
   meaning: string;
@@ -13,11 +11,24 @@ interface WordInterface {
 
 export default async function Home() {
 
-  const res = await fetch('https://frightened-blazer-dog.cyclic.app/words')
+  const res = await fetch('http://localhost:3000/api/words', {
+    cache:'no-cache'
+    // next:{
+    //   revalidate: 5
+    // }
+  })
 
-  const data:WordInterface[] = await res.json()
+  const data = await res.json()
 
   return (
-    <Main  words={data} />
+
+    <main className="min-h-screen lg:p-20 p-10 space-y-6 text-white bg-gray-800">
+       <Input
+          words={data}
+        /> 
+  
+      <List fixed />
+      <List />
+    </main>
   );
 }
