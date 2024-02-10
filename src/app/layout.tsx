@@ -30,16 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className="h-screen  text-white bg-gray-800"
+      lang="pt-br"
     >
 
 
       <Provider>
         <body
-          className={inter.className}>
+          className={`${inter.className} bg-gray-800  text-white`}>
           <nav className="bg-gray-700 text-white">
-            <ul className="flex">
+            <ul className="flex justify-end ">
 
               {links.map(link => {
                 return (
@@ -49,7 +48,7 @@ export default function RootLayout({
                     <li
                       key={link.href}
 
-                      className="p-5 hover:bg-gray-600 "
+                      className="h-16 w-24  hover:bg-gray-600 font-bold items-center justify-center flex"
                     >
 
                       {link.name}
@@ -60,7 +59,7 @@ export default function RootLayout({
             </ul>
           </nav>
           <main
-          // className="lg:p-20 p-10 space-y-6"
+            className="lg:p-20 p-10 space-y-6 "
           >
             {children}
 
