@@ -13,8 +13,6 @@ export function List({ fixed = false }: Props) {
 
   const { words, setWords } = useWordContext()
 
-  // if(words.length === 0)return <h1>Carregando</h1>
-
   return (
 
     <ul

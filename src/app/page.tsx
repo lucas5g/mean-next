@@ -1,8 +1,6 @@
-import { setTimeout } from "timers/promises";
+import { env } from "@/util/env";
 import { Input } from "../components/Input";
 import { List } from "../components/List";
-
-
 export interface WordInterface {
   id: string;
   name: string;
@@ -14,7 +12,7 @@ export interface WordInterface {
 export default async function Home() {
 
   // await setTimeout(30000)
-  const res = await fetch('http://localhost:3000/api/words', {
+  const res = await fetch(env.NEXT_PUBLIC_API + '/words', {
     cache: 'no-cache'
     // next:{
     //   revalidate: 5
