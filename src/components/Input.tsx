@@ -1,7 +1,7 @@
 'use client'
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { WordInterface, useWordContext } from '@/contexts/WordContext'
 
 
@@ -28,7 +28,7 @@ export function Input({words:data}:Props) {
 
     setWords(wordsList)
 
-  },[search])
+  },[search, data, words, setWords])
 
   if(words.length === 0)return<></>
 
