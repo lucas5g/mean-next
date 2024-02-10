@@ -1,7 +1,7 @@
 'use client'
 import clsx from 'clsx';
 import { useContext } from 'react';
-import { api } from '../app/libs/api';
+import { api } from '../lib/api';
 import { useWordContext } from '../contexts/WordContext';
 
 

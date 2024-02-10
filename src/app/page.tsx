@@ -1,3 +1,4 @@
+import { setTimeout } from "timers/promises";
 import { Input } from "../components/Input";
 import { List } from "../components/List";
 
@@ -12,6 +13,7 @@ export interface WordInterface {
 
 export default async function Home() {
 
+  // await setTimeout(30000)
   const res = await fetch('http://localhost:3000/api/words', {
     cache: 'no-cache'
     // next:{
