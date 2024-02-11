@@ -1,7 +1,4 @@
-import { z } from "zod";
 
-const envSchema = z.object({
-  NEXT_PUBLIC_API: z.string().url()
-})
-
-export const env = envSchema.parse(process.env)
+export const env = {
+  BASE_URL_API: process.env.BASE_URL_API
+}

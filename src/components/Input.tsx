@@ -28,7 +28,7 @@ export function Input({words:data}:Props) {
 
     setWords(wordsList)
 
-  },[search, data, words, setWords])
+  },[search])
 
   if(words.length === 0)return<></>
 

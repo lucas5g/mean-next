@@ -11,7 +11,7 @@ export interface WordInterface {
 
 export default async function Home() {
 
-  const res = await fetch(env.NEXT_PUBLIC_API + '/words', {
+  const res = await fetch(env.BASE_URL_API + '/words', {
     cache: 'no-cache'
   })
 
