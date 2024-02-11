@@ -4,7 +4,7 @@ interface BookInterface {
   id: number
   name: string
   _count: {
-    word: number
+    words: number
   }
 }
 
@@ -37,7 +37,7 @@ export default async function Book() {
                   {book.name}
                 </td>
                 <td>
-                  {book._count.word}
+                  {book._count.words}
                 </td>
               </tr>
             )
