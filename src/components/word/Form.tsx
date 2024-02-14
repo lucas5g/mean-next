@@ -68,7 +68,7 @@ export function Form({ books }: Props) {
 
           <textarea
             name="meaning"
-            className="w-full rounded h-24 bg-gray-500 p-3 font-bold placeholder:text-gray-300 text-gray-200"
+            className="w-full rounded h-32 bg-gray-500 p-3 font-bold placeholder:text-gray-300 text-gray-200"
             placeholder="Significado"
             value={word?.meaning}
             onChange={event => setWord({ ...word, meaning: event.target.value })}
