@@ -1,6 +1,7 @@
 import { env } from "@/util/env";
 import { Input } from "../components/Input";
 import { List } from "../components/List";
+import { Form } from "@/components/word/Form";
 export interface WordInterface {
   id: string;
   name: string;
@@ -11,11 +12,17 @@ export interface WordInterface {
 
 export default async function Home() {
 
-  const res = await fetch(env.BASE_URL_API + '/words', {
+  const res = await fetch('https://frightened-blazer-dog.cyclic.app/words', {
     cache: 'no-cache'
   })
 
   const data = await res.json()
+
+  const resBooks = await fetch('https://frightened-blazer-dog.cyclic.app/books', {
+    cache: 'no-cache'
+  })
+
+  const books = await resBooks.json()
 
   return (
     <>
@@ -24,7 +31,9 @@ export default async function Home() {
       />
       <List fixed />
       <List />
-
+      <Form 
+        books={books}
+        />
     </>
 
   );

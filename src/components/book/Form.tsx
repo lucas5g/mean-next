@@ -11,7 +11,7 @@ import { api } from "@/lib/api"
 import { Plus } from "lucide-react"
 import { FormEvent, useState } from "react"
 
-interface BookInterface{
+export interface BookInterface{
   name: string
 }
 
@@ -23,6 +23,7 @@ export function Form() {
     event.preventDefault()
     try{
       await api.post('/books', book)
+      location.reload()
     }catch(error){
       console.log(error)
     }finally{
@@ -47,6 +48,9 @@ export function Form() {
           <input
             className="p-3 rounded bg-gray-500 placeholder:text-gray-300 font-bold text-gray-100 w-full"
             placeholder="Nome"
+            value={book?.name}
+            name='nome'
+            onChange={event => setBook({...book, name: event.target.value})}
           />
           <footer className="space-x-3 flex justify-end" >
             <DialogClose>

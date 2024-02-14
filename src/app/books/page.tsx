@@ -11,7 +11,7 @@ interface BookInterface {
 
 export default async function Book() {
 
-  const res = await fetch(env.NEXT_PUBLIC_API + '/books', {
+  const res = await fetch('https://frightened-blazer-dog.cyclic.app/books', {
     cache: 'no-cache'
   })
   const books: BookInterface[] = await res.json()
