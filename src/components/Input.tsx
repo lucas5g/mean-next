@@ -30,8 +30,6 @@ export function Input({words:data}:Props) {
 
   },[search])
 
-  if(words.length === 0)return<></>
-
   return (
     <div className="flex items-center relative justify-end">
       <input
