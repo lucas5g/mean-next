@@ -1,8 +1,9 @@
 'use client'
 import clsx from 'clsx';
-import { useContext } from 'react';
 import { api } from '../lib/api';
 import { useWordContext } from '../contexts/WordContext';
+import axios from 'axios';
+// import { revalidatePath } from 'next/cache';
 
 
 
@@ -37,6 +38,7 @@ export function List({ fixed = false }: Props) {
                   fixed: !word.fixed,
                 });
 
+                axios.get('/api')
 
                 const updateWords = words.map((row) => {
                   if (row.id === word.id) {

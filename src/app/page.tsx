@@ -13,13 +13,13 @@ export interface WordInterface {
 export default async function Home() {
 
   const res = await fetch('https://frightened-blazer-dog.cyclic.app/words', {
-    cache: 'no-cache'
+    // cache: 'no-cache'
   })
 
   const data = await res.json()
 
   const resBooks = await fetch('https://frightened-blazer-dog.cyclic.app/books', {
-    cache: 'no-cache'
+    // cache: 'no-cache'
   })
 
   const books = await resBooks.json()
@@ -31,9 +31,9 @@ export default async function Home() {
       />
       <List fixed />
       <List />
-      <Form 
+      <Form
         books={books}
-        />
+      />
     </>
 
   );
