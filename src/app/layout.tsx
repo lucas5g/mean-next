@@ -25,7 +25,7 @@ export default function RootLayout({
           className={`${inter.className} bg-gray-800  text-white`}>
           <Navbar />
           <main
-            className="lg:p-20 p-10 space-y-6 "
+            className="lg:p-20 md:p-10 p-5  space-y-6 "
           >
             {children}
 

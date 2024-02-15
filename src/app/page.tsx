@@ -13,18 +13,21 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
 
-  const res = await fetch('https://frightened-blazer-dog.cyclic.app/words')
+  const [resWords, resBooks] = await Promise.all([
+    fetch('https://frightened-blazer-dog.cyclic.app/words'),
+    fetch('https://frightened-blazer-dog.cyclic.app/books')
+  ])
 
-  const data = await res.json()
+  const [words, books] = await Promise.all([
+    resWords.json(),
+    resBooks.json()
+  ])
 
-  const resBooks = await fetch('https://frightened-blazer-dog.cyclic.app/books')
-
-  const books = await resBooks.json()
 
   return (
     <>
       <Input
-        words={data}
+        words={words}
       />
       <List fixed />
       <List />
