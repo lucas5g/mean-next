@@ -13,13 +13,11 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
 
-  const res = await fetch(env.API + '/words')
+  const res = await fetch('https://frightened-blazer-dog.cyclic.app/words')
 
   const data = await res.json()
 
-  const resBooks = await fetch('https://frightened-blazer-dog.cyclic.app/books', {
-    // cache: 'no-cache'
-  })
+  const resBooks = await fetch('https://frightened-blazer-dog.cyclic.app/books')
 
   const books = await resBooks.json()
 
