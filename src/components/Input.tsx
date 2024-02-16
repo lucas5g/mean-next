@@ -9,7 +9,8 @@ const searchText = (text: string) => {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
 };
 
 interface Props{
@@ -20,6 +21,10 @@ export function Input({words:data}:Props) {
 
   const [search, setSearch] = useState('')
   const { setWords } = useWordContext()
+
+  useEffect(() => {
+    setWords(data)
+  }, [])
 
   return (
     <div className="flex items-center relative justify-end">
@@ -32,7 +37,7 @@ export function Input({words:data}:Props) {
           const searchFilter = searchText(event.target.value)
 
           const wordsList = data.filter((word) => {
-            return searchText(word.name).includes(search.trim());
+            return searchText(word.name).includes(searchFilter);
           });
       
           setWords(wordsList)

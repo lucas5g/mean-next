@@ -14,8 +14,8 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
 
   const [resWords, resBooks] = await Promise.all([
-    fetch('https://frightened-blazer-dog.cyclic.app/words'),
-    fetch('https://frightened-blazer-dog.cyclic.app/books')
+    fetch(env.API + '/words'),
+    fetch(env.API + '/books')
   ])
 
   const [words, books] = await Promise.all([
