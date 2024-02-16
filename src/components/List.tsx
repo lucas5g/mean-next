@@ -34,7 +34,7 @@ export function List({ fixed = false }: Props) {
               })}
               onClick={async () => {
 
-                api.patch('/words/'.concat(word.id), {
+                api.patch(`/words/${word.id}`, {
                   fixed: !word.fixed,
                 });
 

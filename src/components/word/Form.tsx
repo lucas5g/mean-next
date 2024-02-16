@@ -1,5 +1,4 @@
 'use client'
-import { BookInterface } from "@/components/book/Form"
 import {
   Dialog,
   DialogContent,
@@ -12,13 +11,7 @@ import { api } from "@/lib/api"
 import axios from "axios"
 import { Plus } from "lucide-react"
 import { FormEvent, useState } from "react"
-
-interface WordInterface {
-  name: string
-  bookId: number
-  meaning: string
-  fixed?: boolean
-}
+import { WordInterface, useWordContext } from "../../contexts/WordContext"
 
 interface Props {
   books: {
@@ -29,27 +22,43 @@ interface Props {
 
 export function Form({ books }: Props) {
 
-  const [word, setWord] = useState({} as WordInterface)
+  const [open, setOpen] = useState(false);
+
+  const { setWords, words, word, setWord } = useWordContext()
 
   async function handleSubmit(event: FormEvent) {
 
+
     event.preventDefault()
-    try {
-      word.fixed = false
-      await api.post('/words', word)
-      axios.get('/api/cache?revalidate=books')
+    word.fixed = false
+    api.post('/words', word)
+      .catch(error => {
+        if (error.response.status !== 400) {
+          console.log(error)
+          alert('Erro ao criar palavra')
+        }
+        alert(error.response.data.message)
+        window.location.reload()
 
-      location.reload()
-    } catch (error) {
-      console.log(error)
-    } finally {
-      console.log('finally')
-    }
+      })
 
+    axios.get('/api/cache?revalidate=books')
+
+
+    const newListWords = [...words, {
+      ...word,
+      id: new Date().valueOf()
+    }]
+
+    setWords(newListWords)
+    
+    setWord({} as WordInterface)
+
+    setOpen(false)
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="bg-gray-500 fixed bottom-7 right-5 rounded-full p-3 hover:bg-gray-400" >
         <Plus size={25} />
       </DialogTrigger>
@@ -71,12 +80,11 @@ export function Form({ books }: Props) {
 
           <textarea
             name="meaning"
-            className="w-full rounded h-32 bg-gray-500 p-3 font-bold placeholder:text-gray-300 text-gray-200"
+            className="w-full rounded h-36 bg-gray-500 p-3 font-bold placeholder:text-gray-300 text-gray-200"
             placeholder="Significado"
             value={word?.meaning}
             onChange={event => setWord({ ...word, meaning: event.target.value })}
-          // cols={30}
-          // rows={10}
+
           >
 
           </textarea>
@@ -102,14 +110,11 @@ export function Form({ books }: Props) {
           </select>
 
           <footer className="space-x-3 flex justify-end" >
-            <DialogClose>
-
-              <button
-                className="bg-gray-200 hover:bg-gray-100 w-24 h-10 rounded font-bold text-gray-500 border-gray-800"
-                type="reset"
-              >
-                Cancelar
-              </button>
+            <DialogClose
+              className="bg-gray-200 hover:bg-gray-100 w-24 h-10 rounded font-bold text-gray-500 border-gray-800"
+              type="reset"
+            >
+              Cancelar
             </DialogClose>
             <button className="bg-gray-900 hover:bg-gray-950 font-bold w-24 h-10 rounded">
               Cadastrar

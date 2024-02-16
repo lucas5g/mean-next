@@ -19,24 +19,25 @@ interface Props{
 export function Input({words:data}:Props) {
 
   const [search, setSearch] = useState('')
-  const { setWords, words } = useWordContext()
-
-  useEffect(() => {
-    const wordsList = data.filter((word) => {
-      return searchText(word.name).includes(search.trim());
-    });
-
-    setWords(wordsList)
-
-  },[search])
+  const { setWords } = useWordContext()
 
   return (
     <div className="flex items-center relative justify-end">
       <input
         placeholder="Type word"
         className="w-full p-5 font-semibold text-white bg-gray-600 border rounded-xl placeholder:text-white"
-        onChange={(event) => setSearch(searchText(event.target.value))}
         value={search}
+        onChange={(event) =>  {
+          setSearch(event.target.value)
+          const searchFilter = searchText(event.target.value)
+
+          const wordsList = data.filter((word) => {
+            return searchText(word.name).includes(search.trim());
+          });
+      
+          setWords(wordsList)
+
+        }}
       />
       <X
         className={clsx('absolute mr-5 size-8 hover:cursor-pointer', {
