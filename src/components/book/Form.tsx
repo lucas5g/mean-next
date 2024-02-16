@@ -10,33 +10,44 @@ import {
 import { api } from "@/lib/api"
 import axios from "axios"
 import { Plus } from "lucide-react"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
+import { BookInterface } from "./List"
 
-export interface BookInterface{
-  name: string
+
+interface Props {
+  books: BookInterface[]
+  setBooks: Dispatch<SetStateAction<BookInterface[]>>
 }
 
-export function Form() {
+export function Form({ books, setBooks }: Props) {
 
-  const [book, setBook] = useState<BookInterface>()
+  const [book, setBook] = useState({} as BookInterface)
+  const [open, setOpen] = useState(false);
 
-  async function handleSubmit(event:FormEvent){
+
+  function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    try{
-      await api.post('/books', book)
-      axios.get('/api/cache?revalidate=books')
+    api.post('/books', book)
+      .catch(error => {
+        console.log(error)
+        alert('Erro ao cadastrar o livro')
+        location.reload()
+      })
 
-      location.reload()
-    }catch(error){
-      console.log(error)
-    }finally{
-      console.log('finally')
-    }
+    axios.get('/api/cache?revalidate=books')
 
+    setBooks([
+      ...books, {
+        ...book,
+        id: new Date().valueOf()
+      }
+    ])
+
+    setOpen(false)
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="bg-gray-500 fixed bottom-7 right-5 rounded-full p-3 hover:bg-gray-400" >
         <Plus size={25} />
       </DialogTrigger>
@@ -51,19 +62,16 @@ export function Form() {
           <input
             className="p-3 rounded bg-gray-500 placeholder:text-gray-300 font-bold text-gray-100 w-full"
             placeholder="Nome"
-            value={book?.name}
+            value={book?.name ?? ''}
             name='nome'
-            onChange={event => setBook({...book, name: event.target.value})}
+            onChange={event => setBook({ ...book, name: event.target.value })}
           />
           <footer className="space-x-3 flex justify-end" >
-            <DialogClose>
-
-              <button
-                className="bg-gray-200 hover:bg-gray-100 w-24 h-10 rounded font-bold text-gray-500 border-gray-800"
-                type="reset"
-              >
-                Cancelar
-              </button>
+            <DialogClose
+              className="bg-gray-200 hover:bg-gray-100 w-24 h-10 rounded font-bold text-gray-500 border-gray-800"
+              type="reset"
+            >
+              Cancelar
             </DialogClose>
             <button className="bg-gray-900 hover:bg-gray-950 font-bold w-24 h-10 rounded">
               Cadastrar
