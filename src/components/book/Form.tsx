@@ -8,6 +8,7 @@ import {
   DialogClose
 } from "@/components/ui/dialog"
 import { api } from "@/lib/api"
+import axios from "axios"
 import { Plus } from "lucide-react"
 import { FormEvent, useState } from "react"
 
@@ -23,6 +24,8 @@ export function Form() {
     event.preventDefault()
     try{
       await api.post('/books', book)
+      axios.get('/api/cache?revalidate=books')
+
       location.reload()
     }catch(error){
       console.log(error)

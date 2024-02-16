@@ -9,6 +9,7 @@ import {
   DialogClose
 } from "@/components/ui/dialog"
 import { api } from "@/lib/api"
+import axios from "axios"
 import { Plus } from "lucide-react"
 import { FormEvent, useState } from "react"
 
@@ -36,6 +37,8 @@ export function Form({ books }: Props) {
     try {
       word.fixed = false
       await api.post('/words', word)
+      axios.get('/api/cache?revalidate=books')
+
       location.reload()
     } catch (error) {
       console.log(error)

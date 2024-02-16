@@ -38,7 +38,7 @@ export function List({ fixed = false }: Props) {
                   fixed: !word.fixed,
                 });
 
-                axios.get('/api')
+                axios.get('/api/cache?revalidate=words')
 
                 const updateWords = words.map((row) => {
                   if (row.id === word.id) {
