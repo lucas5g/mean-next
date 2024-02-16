@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Form } from "./Form"
 
 export interface BookInterface {
@@ -16,7 +16,13 @@ interface Props {
 
 export function List(props: Props) {
 
-  const [books, setBooks] = useState(props.books)
+  const [books, setBooks] = useState([] as BookInterface[])
+
+  useEffect(() => {
+    setBooks(props.books)
+  }, [])
+
+  console.log(books)
 
   return (
     <div className="flex justify-center">
@@ -33,7 +39,7 @@ export function List(props: Props) {
           </tr>
         </thead>
         <tbody>
-          {books.map(book => {
+          {books?.map(book => {
             return (
               <tr key={book.id}>
                 <td className="p-2">

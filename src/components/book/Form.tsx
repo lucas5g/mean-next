@@ -39,7 +39,10 @@ export function Form({ books, setBooks }: Props) {
     setBooks([
       ...books, {
         ...book,
-        id: new Date().valueOf()
+        id: new Date().valueOf(),
+        _count: {
+          words: 0
+        }
       }
     ])
 

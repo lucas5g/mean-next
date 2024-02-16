@@ -7,7 +7,7 @@ export async function GET(request: NextRequest){
   const revalidate = searchParams.get('revalidate')
 
   if(revalidate === 'books'){
-    revalidatePath('/books', 'page')
+    revalidatePath('/books')
   }else{
     revalidatePath('/')
   }
