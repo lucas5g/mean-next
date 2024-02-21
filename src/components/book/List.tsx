@@ -14,15 +14,7 @@ interface Props {
 }
 
 
-export function List(props: Props) {
-
-  const [books, setBooks] = useState([] as BookInterface[])
-
-  useEffect(() => {
-    setBooks(props.books)
-  }, [])
-
-  console.log(books)
+export function List({books}: Props) {
 
   return (
     <div className="flex justify-center">

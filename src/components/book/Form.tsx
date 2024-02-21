@@ -14,37 +14,29 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 import { BookInterface } from "./List"
 
 
-interface Props {
-  books: BookInterface[]
-  setBooks: Dispatch<SetStateAction<BookInterface[]>>
-}
-
-export function Form({ books, setBooks }: Props) {
-
-  const [book, setBook] = useState({} as BookInterface)
-  const [open, setOpen] = useState(false);
-
+export function Form() {
+  const [open, setOpen] = useState(false)
 
   function handleSubmit(event: FormEvent) {
-    event.preventDefault()
-    api.post('/books', book)
-      .catch(error => {
-        console.log(error)
-        alert('Erro ao cadastrar o livro')
-        location.reload()
-      })
+    // event.preventDefault()
+    // api.post('/books', book)
+    //   .catch(error => {
+    //     console.log(error)
+    //     alert('Erro ao cadastrar o livro')
+    //     location.reload()
+    //   })
 
-    axios.get('/api/cache?revalidate=books')
+    // axios.get('/api/cache?revalidate=books')
 
-    setBooks([
-      ...books, {
-        ...book,
-        id: new Date().valueOf(),
-        _count: {
-          words: 0
-        }
-      }
-    ])
+    // setBooks([
+    //   ...books, {
+    //     ...book,
+    //     id: new Date().valueOf(),
+    //     _count: {
+    //       words: 0
+    //     }
+    //   }
+    // ])
 
     setOpen(false)
   }
@@ -65,9 +57,9 @@ export function Form({ books, setBooks }: Props) {
           <input
             className="p-3 rounded bg-gray-500 placeholder:text-gray-300 font-bold text-gray-100 w-full"
             placeholder="Nome"
-            value={book?.name ?? ''}
+            // value={book?.name ?? ''}
             name='nome'
-            onChange={event => setBook({ ...book, name: event.target.value })}
+            // onChange={event => setBook({ ...book, name: event.target.value })}
           />
           <footer className="space-x-3 flex justify-end" >
             <DialogClose

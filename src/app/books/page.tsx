@@ -1,12 +1,54 @@
 import { env } from "@/util/env"
-import { List } from "../../components/book/List"
+import { Form } from "../../components/book/Form"
 
-
+export interface BookInterface {
+  id: number
+  name: string
+  _count?: {
+    words: number
+  }
+}
 
 export default async function Book() {
 
-  const res = await fetch(env.API + '/books')
-  const books = await res.json()
+  const res = await fetch(env.API + '/books', {
+    next: {
+      tags: ['books']
+    }
+  })
+  const books: BookInterface[] = await res.json()
 
-  return <List books={books} />
+  return (
+    <div className="flex justify-center">
+      <table className="w-full">
+        <thead className="text-left">
+          <tr className="border-b">
+            {['Nome', 'Palavras'].map(title => {
+              return (
+                <th key={title} className="p-2">
+                  {title}
+                </th>
+              )
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {books?.map(book => {
+            return (
+              <tr key={book.id}>
+                <td className="p-2">
+                  {book.name}
+                </td>
+                <td>
+                  {book._count?.words}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      <Form />
+
+    </div>
+  )
 }
