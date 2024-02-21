@@ -46,10 +46,10 @@ export function List({books}: Props) {
         </tbody>
       </table>
 
-      <Form
+      {/* <Form
         books={books}
         setBooks={setBooks}
-      />
+      /> */}
     </div>
   )
 }
