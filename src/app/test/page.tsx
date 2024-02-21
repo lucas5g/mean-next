@@ -1,6 +1,8 @@
+import { env } from "../../util/env"
+
 export default async function Test() {
 
-  const res = await fetch('http://localhost:3000/api/words')
+  const res = await fetch(env.API_TEST + '/api/words')
 
   const data = await res.json()
 
