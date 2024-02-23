@@ -1,21 +1,22 @@
+import { Word } from "@prisma/client";
 import { prisma } from "../lib/prisma";
 
 export class WordService {
-  async create(createWordDto: CreateWordDto) {
+  async create(data: Word) {
     const wordExist = await prisma.word.count({
       where: {
-        name: createWordDto.name,
+        name: data.name,
       },
     });
 
     // console.log(wordExist == true )
 
     if (wordExist > 0) {
-      throw new BadRequestException(`Palavra ${createWordDto.name} já existe.`);
+      throw new Error(`Palavra ${data.name} já existe.`);
     }
 
-    return this.prisma.word.create({
-      data: createWordDto,
+    return prisma.word.create({
+      data
     });
   }
 
