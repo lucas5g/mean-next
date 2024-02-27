@@ -2,26 +2,17 @@ import { env } from "@/util/env";
 import { Input } from "../components/Input";
 import { List } from "../components/List";
 import { Form } from "@/components/word/Form";
-export interface WordInterface {
-  id: string;
-  name: string;
-  meaning: string;
-  fixed: boolean;
-}
+import { WordService } from "@/services/word.service";
+import { BookService } from "@/services/book.service";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+const wordService = new WordService()
+const bookService = new BookService()
 
 export default async function Home() {
 
-  const [resWords, resBooks] = await Promise.all([
-    fetch(env.API + '/words'),
-    fetch(env.API + '/books')
-  ])
-
-  const [words, books] = await Promise.all([
-    resWords.json(),
-    resBooks.json()
+  const [words, books] =  await Promise.all([
+    wordService.findAll(),
+    bookService.findAll()
   ])
 
 

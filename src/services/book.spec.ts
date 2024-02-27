@@ -24,9 +24,10 @@ describe('Book', async () => {
 
   it('find all', async () => {
     const res = await service.findAll();
+    console.log(res)
     res.forEach(row => {
 
-      ['name'].forEach(property => {
+      ['name', '_count'].forEach(property => {
         expect(row).property(property)
       })
     })

@@ -1,23 +1,19 @@
-import { env } from "@/util/env"
+import { revalidateTag, unstable_cache } from "next/cache"
 import { Form } from "../../components/book/Form"
+import { BookService } from "@/services/book.service"
 
-export interface BookInterface {
-  id: number
-  name: string
-  _count?: {
-    words: number
-  }
-}
+const bookService = new BookService()
 
 export default async function Book() {
 
-  const res = await fetch(env.API + '/books', {
-    next: {
-      tags: ['books']
-    }
+  const findAllBooks = unstable_cache(async () => {
+    return await bookService.findAll()
+  }, ['books'], {
+    revalidate: false,
+    tags: ['books']
   })
-  const books: BookInterface[] = await res.json()
 
+  const books = await findAllBooks()
   return (
     <div className="flex justify-center">
       <table className="w-full">
@@ -33,7 +29,7 @@ export default async function Book() {
           </tr>
         </thead>
         <tbody>
-          {books?.map(book => {
+          {books.map(book => {
             return (
               <tr key={book.id}>
                 <td className="p-2">

@@ -30,6 +30,13 @@ export class BookService {
 
   findAll() {
     return prisma.book.findMany({
+      include: {
+        _count: {
+          select: {
+            words: true
+          }
+        }
+      },
       orderBy: {
         name: 'asc',
       },
