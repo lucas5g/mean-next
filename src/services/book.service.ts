@@ -5,8 +5,10 @@ const createBookSchema = z.object({
   name: z.string()
 })
 
-type CreateBookType = z.infer<typeof createBookSchema>
+const updateBookSchema = createBookSchema.partial()
 
+type CreateBookType = z.infer<typeof createBookSchema>
+type UpdateBookType = z.infer<typeof updateBookSchema>
 export class BookService {
   async create(book: CreateBookType) {
 
@@ -26,32 +28,27 @@ export class BookService {
     });
   }
 
-  // findAll() {
-  //   return this.prisma.word.findMany({
-  //     orderBy: {
-  //       name: 'asc',
-  //     },
-  //   });
-  // }
+  findAll() {
+    return prisma.book.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
+  }
 
-  // findOne(id: number) {
-  //   return this.prisma.word.findFirstOrThrow({
-  //     where: { id },
-  //   });
-  // }
+  findOne(id: number) {
+    return prisma.book.findFirstOrThrow({
+      where: { id },
+    });
+  }
 
-  // update(id: number, updateWordDto: UpdateWordDto) {
-  //   return this.prisma.word.update({
-  //     where: { id },
-  //     data: updateWordDto,
-  //   });
-  // }
-
-  // remove(id: number) {
-  //   return this.prisma.word.delete({
-  //     where: { id },
-  //   });
-  // }
+  update(id: number, updateBook: UpdateBookType) {
+    const data = updateBookSchema.parse(updateBook)
+    return prisma.book.update({
+      where: { id },
+      data
+    });
+  }
 
   remove(id: number) {
     return prisma.book.delete({
