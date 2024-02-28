@@ -11,29 +11,22 @@ import {
 import { Plus } from "lucide-react"
 import { env } from "../../util/env"
 import { revalidateTag } from "next/cache"
+import { BookService, createBookSchema } from "@/services/book.service"
 
+const bookService = new BookService()
 
 export async function Form() {
   // const [open, setOpen] = useState(false)
 
-  async function handleSubmit(form: FormData) {
+  async function handleSubmit(formData: FormData) {
     'use server'
-    const data = {
-      name: form.get('name')
-    }
 
-    const res = await fetch(env.API + '/books', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
+    const data = createBookSchema.parse(Object.fromEntries(formData.entries()))
 
-    if(res.status !== 201){
-      alert('Erro ao cadastrar')
-      console.log(res.status)
-    }
+    bookService.create(data)
+
+    revalidateTag('books')
+
   }
   return (
     <form
@@ -48,9 +41,9 @@ export async function Form() {
       // onChange={event => setBook({ ...book, name: event.target.value })}
       />
       <footer className="space-x-3 flex justify-end" >
-        {/* <button className="bg-gray-900 hover:bg-gray-950 font-bold w-24 h-10 rounded">
+        <button className="bg-gray-900 hover:bg-gray-950 font-bold w-24 h-10 rounded">
           Cadastrar
-        </button> */}
+        </button>
       </footer>
     </form>
   )

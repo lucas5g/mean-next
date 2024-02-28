@@ -1,7 +1,7 @@
 import { prisma } from "../lib/prisma";
 import { z } from 'zod'
 
-const createBookSchema = z.object({
+export const createBookSchema = z.object({
   name: z.string()
 })
 

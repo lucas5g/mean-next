@@ -2,16 +2,17 @@ import { revalidateTag, unstable_cache } from "next/cache"
 import { Form } from "../../components/book/Form"
 import { BookService } from "@/services/book.service"
 
+
+export const findAllBooks = unstable_cache(async () => {
+  return await bookService.findAll()
+}, ['books'], {
+  revalidate: false,
+  tags: ['books']
+})
+
 const bookService = new BookService()
 
 export default async function Book() {
-
-  const findAllBooks = unstable_cache(async () => {
-    return await bookService.findAll()
-  }, ['books'], {
-    revalidate: false,
-    tags: ['books']
-  })
 
   const books = await findAllBooks()
   return (
